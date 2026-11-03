@@ -21,12 +21,13 @@ function clean(text) {
 
 module.exports = async function handler(req, res) {
   try {
-    const me = currentUser(req);
+    const me = await currentUser(req);
     if (!me) return send(res, 401, { error: 'auth' });
 
     // The room ALWAYS comes from the server-side identity. Any "room" sent by the browser is ignored.
     if (req.method === 'GET') {
       const q = new URL(req.url, 'http://x').searchParams;
+      db.touchSession(me.sid).catch(() => {}); // fire-and-forget
       const after = parseInt(q.get('after'), 10);
       const before = parseInt(q.get('before'), 10);
       const opts = {};
