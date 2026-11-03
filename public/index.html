@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#160D12">
+  <meta name="color-scheme" content="dark">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Midnight Rose</title>
+  <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="on-login">
+
+  <div class="bg" aria-hidden="true">
+    <div class="bg-drift"><div class="bg-rose"></div></div>
+    <canvas id="dust"></canvas>
+    <div class="bg-veil"></div>
+    <div class="bg-veil bg-veil-chat"></div>
+    <div class="bg-grain"></div>
+  </div>
+
+  <main id="login" class="login" hidden>
+    <h1 class="wordmark" dir="ltr">Midnight Rose</h1>
+    <form id="login-form" class="login-form" autocomplete="off" novalidate>
+      <input id="password" type="password" placeholder="رمز عبور" aria-label="رمز عبور"
+             autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="200">
+      <button id="login-btn" type="submit">ورود</button>
+      <p id="login-note" class="login-note" role="status" aria-live="polite"></p>
+    </form>
+  </main>
+
+  <section id="chat" class="chat" hidden>
+    <header class="chat-head">
+      <div class="head-main">
+        <span class="head-title" dir="ltr">Midnight Rose</span>
+        <span id="test-badge" class="test-badge" dir="ltr" hidden>TEST ROOM</span>
+      </div>
+      <button id="logout-btn" class="link-btn" type="button">خروج</button>
+    </header>
+
+    <div class="stage">
+      <div id="messages" class="messages" role="log" aria-live="polite"></div>
+      <button id="jump" class="jump" type="button" hidden aria-label="رفتن به آخرین پیام">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 5v14m0 0l-6-6m6 6l6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+
+    <p id="send-note" class="send-note" role="status" aria-live="polite"></p>
+    <form id="composer" class="composer" autocomplete="off">
+      <textarea id="text" rows="1" dir="auto" placeholder="بنویس…" aria-label="پیام" maxlength="2000"></textarea>
+      <button id="send-btn" type="submit" aria-label="ارسال">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 19V5m0 0l-6 6m6-6l6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </form>
+  </section>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
