@@ -8,7 +8,7 @@
   var el = {
     login: $('login'), form: $('login-form'), pass: $('password'), btn: $('login-btn'), note: $('login-note'),
     chat: $('chat'), list: $('messages'), composer: $('composer'), input: $('text'), send: $('send-btn'),
-    sendNote: $('send-note'), badge: $('test-badge'), logout: $('logout-btn'), jump: $('jump')
+    sendNote: $('send-note'), badge: $('test-badge'), logout: $('logout-btn'), jump: $('jump'), adminLink: $('admin-link')
   };
 
   var state = { msgs: [], seen: {}, hasMore: false, timer: null, polling: false, active: false };
@@ -30,6 +30,7 @@
     state.msgs = []; state.seen = {}; state.hasMore = false;
     el.list.textContent = '';
     document.body.className = 'on-login';
+     if (el.adminLink) el.adminLink.hidden = true;
     el.chat.hidden = true;
     el.login.hidden = false;
     el.pass.value = '';
@@ -41,6 +42,7 @@
     el.login.hidden = true;
     el.chat.hidden = false;
     el.badge.hidden = !me.isTest;
+     if (el.adminLink) el.adminLink.hidden = (me.who !== 'a');
     state.active = true;
     fitToViewport();
     loadLatest();
