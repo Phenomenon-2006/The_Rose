@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const { verifyPassword, createSession, hashIp, SESSION_DAYS } = require('../lib/auth');
 const { identities } = require('../lib/config');
 const db = require('../lib/db');
@@ -31,7 +32,9 @@ module.exports = async function handler(req, res) {
       return send(res, 401, { error: 'invalid' });
     }
 
-    return send(res, 200, { ok: true }, { 'Set-Cookie': cookieHeader(createSession(matched), SESSION_DAYS * 86400) });
+    const sid = crypto.randomBytes(20).toString('hex');
+    try { await db.upsertDeviceSession(sid, matched, req.headers['user-agent'] || ''); } catch (e) { /* اگر ثبت دستگاه ناموفق شد، ورود را متوقف نکن */ }
+    return send(res, 200, { ok: true }, { 'Set-Cookie': cookieHeader(createSession(matched, sid), SESSION_DAYS * 86400) });
   } catch (e) {
     console.error('login error:', e.message);
     return send(res, 500, { error: 'server' });
