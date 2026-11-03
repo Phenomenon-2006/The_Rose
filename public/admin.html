@@ -5,73 +5,184 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
   <title>Admin — Rose</title>
-  <link rel="stylesheet" href="assets/css/style.css">
-  <style>
-    body { overflow: auto; }
-    .admin-wrap { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; padding: 24px 16px 60px; }
-    .admin-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
-    .admin-head h1 { font-family: var(--font-title); font-style: italic; font-size: 1.5rem; margin: 0; color: var(--text); }
-    .admin-head a { color: var(--muted); font-size: .9rem; text-decoration: none; }
-    .admin-head a:hover { color: var(--accent); }
-    #status { color: var(--accent); margin-bottom: 16px; min-height: 1.4em; }
-    .section-title { font-size: .75rem; letter-spacing: .1em; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 6px; margin: 28px 0 14px; }
-    .session-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; background: rgba(31,18,25,0.72); border: 1px solid var(--line); border-radius: 14px; padding: 12px 16px; margin-bottom: 10px; }
-    .session-row.revoked { opacity: .45; }
-    .session-info { flex: 1; min-width: 0; }
-    .session-line { display: flex; align-items: center; gap: 9px; margin-bottom: 4px; }
-    .badge { font-size: .68rem; padding: 2px 8px; border-radius: 9px; letter-spacing: .06em; }
-    .badge-online  { background: rgba(80,160,80,.22); color: #7ed87e; border: 1px solid rgba(80,160,80,.35); }
-    .badge-offline { background: rgba(100,80,80,.22); color: var(--muted); border: 1px solid var(--line); }
-    .badge-revoked { background: rgba(90,30,30,.3); color: #c07070; border: 1px solid rgba(90,30,30,.4); }
-    .device-name { font-weight: 700; color: var(--text); font-size: .95rem; }
-    .session-meta { font-size: .78rem; color: var(--muted); margin-top: 2px; }
-    .session-id { font-size: .68rem; opacity: .6; direction: ltr; text-align: left; }
-    .revoke-btn { flex: none; padding: 6px 14px; border: 1px solid rgba(214,154,169,0.3); border-radius: 12px; background: none; color: var(--accent); font: inherit; font-size: .85rem; cursor: pointer; white-space: nowrap; }
-    .revoke-btn:hover { background: rgba(135,57,79,.3); }
-    .current-tag { flex: none; font-size: .75rem; color: var(--muted); white-space: nowrap; }
-    .no-session { color: var(--muted); font-size: .9rem; }
-    .disclaimer { margin-top: 36px; padding: 14px 18px; border: 1px solid var(--line); border-radius: 12px; font-size: .8rem; color: var(--muted); line-height: 1.9; }
-    .disclaimer strong { color: var(--accent); }
-    .bg {
-    position: fixed !important;
-    inset: 0;
-    z-index: 0 !important;
-    pointer-events: none !important;
+<style>
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background: #111114 !important;
+  color: #f5f5f5;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  overflow: auto;
+}
+
+.bg {
+  display: none !important;
 }
 
 .admin-wrap {
-    position: relative !important;
-    z-index: 9999 !important;
-    isolation: isolate;
+  position: relative;
+  display: block;
+  visibility: visible;
+  opacity: 1;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 32px 16px 60px;
 }
-    .admin-wrap {
-    position: relative !important;
-    z-index: 99999 !important;
-    isolation: isolate;
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    color: #fff !important;
+
+.admin-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
 }
-    .admin-head,
-#status,
-.section-title,
-#sessions-a,
-#sessions-b,
+
+.admin-head h1 {
+  font-size: 1.5rem;
+  margin: 0;
+  color: #f5f5f5;
+}
+
+.admin-head a {
+  color: #aaa;
+  font-size: .9rem;
+  text-decoration: none;
+}
+
+.admin-head a:hover {
+  color: #d69aa9;
+}
+
+#status {
+  color: #d69aa9;
+  margin-bottom: 16px;
+  min-height: 1.4em;
+}
+
+.section-title {
+  font-size: .8rem;
+  color: #aaa;
+  border-bottom: 1px solid #333;
+  padding-bottom: 8px;
+  margin: 28px 0 14px;
+}
+
+.session-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: #1c1c22;
+  border: 1px solid #38383f;
+  border-radius: 14px;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+}
+
+.session-row.revoked {
+  opacity: .45;
+}
+
+.session-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.session-line {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 4px;
+}
+
+.badge {
+  font-size: .68rem;
+  padding: 2px 8px;
+  border-radius: 9px;
+}
+
+.badge-online {
+  background: #18351f;
+  color: #7ed87e;
+}
+
+.badge-offline {
+  background: #333;
+  color: #aaa;
+}
+
+.badge-revoked {
+  background: #401e24;
+  color: #d08080;
+}
+
+.device-name {
+  font-weight: 700;
+  color: #fff;
+  font-size: .95rem;
+}
+
+.session-meta {
+  font-size: .78rem;
+  color: #aaa;
+  margin-top: 2px;
+}
+
+.session-id {
+  font-size: .68rem;
+  opacity: .6;
+  direction: ltr;
+  text-align: left;
+}
+
+.revoke-btn {
+  flex: none;
+  padding: 6px 14px;
+  border: 1px solid #80505d;
+  border-radius: 10px;
+  background: transparent;
+  color: #d69aa9;
+  font: inherit;
+  font-size: .85rem;
+  cursor: pointer;
+}
+
+.revoke-btn:hover {
+  background: #38232a;
+}
+
+.current-tag {
+  flex: none;
+  font-size: .75rem;
+  color: #aaa;
+}
+
+.no-session {
+  color: #aaa;
+  font-size: .9rem;
+}
+
 .disclaimer {
-    position: relative !important;
-    z-index: 100000 !important;
-    visibility: visible !important;
-    opacity: 1 !important;
+  margin-top: 36px;
+  padding: 14px 18px;
+  border: 1px solid #38383f;
+  border-radius: 12px;
+  font-size: .8rem;
+  color: #aaa;
+  line-height: 1.9;
 }
-  </style>
+
+.disclaimer strong {
+  color: #d69aa9;
+}
+</style>
 </head>
-<body>
-  <div class="bg" aria-hidden="true">
-    <div class="bg-drift"><div class="bg-rose"></div></div>
-    <div class="bg-veil"></div>
-    <div class="bg-veil bg-veil-chat" style="opacity:1"></div>
-  </div>
   <div class="admin-wrap">
     <div class="admin-head">
       <h1>Midnight Rose <span style="font-size:.9rem;opacity:.6">/ Admin</span></h1>
