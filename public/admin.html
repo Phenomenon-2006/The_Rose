@@ -32,6 +32,18 @@
     .no-session { color: var(--muted); font-size: .9rem; }
     .disclaimer { margin-top: 36px; padding: 14px 18px; border: 1px solid var(--line); border-radius: 12px; font-size: .8rem; color: var(--muted); line-height: 1.9; }
     .disclaimer strong { color: var(--accent); }
+    .bg {
+    position: fixed !important;
+    inset: 0;
+    z-index: 0 !important;
+    pointer-events: none !important;
+}
+
+.admin-wrap {
+    position: relative !important;
+    z-index: 9999 !important;
+    isolation: isolate;
+}
   </style>
 </head>
 <body>
