@@ -1,7 +1,7 @@
 // In-memory fake of the few Supabase REST calls we use. ONLY for local preview/tests
 // (node tools/dev-server.js with no .env). Real data always lives in Supabase.
 function install() {
-  const tables = { messages: [], login_attempts: [] };
+  const tables = { messages: [], login_attempts: [], device_sessions: [] };
   const seq = { messages: 0, login_attempts: 0 };
   const realFetch = global.fetch;
 
@@ -45,7 +45,9 @@ function install() {
           const pairOk = (r.room_id === 'main' && ['a', 'b'].includes(r.sender_key)) || (r.room_id === 'test' && r.sender_key === 'test');
           if (!pairOk || !r.content || r.content.length > 2000) return null;
         }
-        const row = Object.assign({}, r, { id: ++seq[table], created_at: r.created_at || new Date().toISOString() });
+        const autoId = r.id !== undefined ? r.id : ++seq[table];
+        const now = new Date().toISOString();
+        const row = Object.assign({}, r, { id: autoId, created_at: r.created_at || now, last_seen: r.last_seen || now });
         t.push(row);
         return row;
       });
@@ -55,6 +57,11 @@ function install() {
     if (method === 'DELETE') {
       for (let i = t.length - 1; i >= 0; i--) if (matches(t[i])) t.splice(i, 1);
       return reply(204);
+    }
+    if (method === 'PATCH') {
+      const updates = JSON.parse(init.body || '{}');
+      t.forEach(function (row, i) { if (matches(row)) Object.assign(t[i], updates); });
+      return reply(200, []);
     }
     return reply(405, {});
   };
